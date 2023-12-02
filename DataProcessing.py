@@ -14,12 +14,17 @@ if 'Unnamed: 0' in merged_data.columns:
 
 # Process the 'PetAge' column
 def process_age(age):
-    if age == '0-7 weeks old':
-        return '<7 weeks'
+    if pd.isna(age):
+        return np.nan  # Return NaN if the input is NaN
+    elif age == '0-7 weeks old':
+        return 0  # Example return value for '0-7 weeks old'
     elif age == '8 weeks to 12 months old':
-        return '<12 months'
+        return 0.5  # Example return value for '8 weeks to 12 months old'
     else:
-        return age.split()[0]  # Keep only the numeric part
+        # Extract the numeric part from the string and convert to an appropriate numeric value
+        # Assumes the format is always '[number] year(s) old' for other cases
+        return int(age.split()[0])
+
 
 merged_data['PetAge'] = merged_data['PetAge'].apply(process_age)
 
@@ -39,3 +44,11 @@ merged_data.to_csv('DataSet/merged_pet_claims_data.csv', index=False)
 
 # Display the first few rows to verify the changes
 print(merged_data.head())
+
+# nan_in_data = merged_data.isna().any()
+
+# print(nan_in_data)
+print("Unique values in 'PetAge':", merged_data['PetAge'].unique())
+
+
+print(merged_data['PetAge'])
