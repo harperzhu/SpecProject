@@ -24,14 +24,14 @@ numerical_features = ['PetAge']
 categorical_features = ['Species', 'Breed']  # Assuming these are categorical
 
 
-#check NaNs: 
-print("NaN in raw data:", merged_data.isna().any())
-merged_data['PetAge'] = merged_data['PetAge'].fillna(merged_data['PetAge'].median())
+# #check NaNs: 
+# print("NaN in raw data:", merged_data.isna().any())
+# merged_data['PetAge'] = merged_data['PetAge'].fillna(merged_data['PetAge'].median())
 
-merged_data['PetAge'] = merged_data['PetAge'].fillna(merged_data['PetAge'].median())
+# merged_data['PetAge'] = merged_data['PetAge'].fillna(merged_data['PetAge'].median())
 
-for col in categorical_features:
-    merged_data[col] = merged_data[col].fillna('Unknown')
+# for col in categorical_features:
+#     merged_data[col] = merged_data[col].fillna('Unknown')
 
 
 # Check if 'PetAge' column is entirely NaN or has some non-NaN values
@@ -44,13 +44,6 @@ if not merged_data['PetAge'].isna().all():
 else:
     # If it's entirely NaN, you might need to reconsider how to handle this column
     print("'PetAge' column is entirely NaN.")
-
-# print(merged_data['PetAge'])
-
-
-
-
-
 
 
 # Define your features and target variable
@@ -111,7 +104,7 @@ model.compile(optimizer=adam_optimizer, loss='mean_squared_error')
 
 
 # Train the model
-model.fit(X_train, y_train, epochs=5, batch_size=32)
+model.fit(X_train, y_train, epochs=10, batch_size=32)
 
 # Make predictions and evaluate the model
 predictions = model.predict(X_test)

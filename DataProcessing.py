@@ -1,5 +1,8 @@
 import pandas as pd
 import numpy as np
+from sklearn.preprocessing import StandardScaler
+from sklearn.cluster import KMeans
+import matplotlib.pyplot as plt
 
 # Load the datasets
 pet_data = pd.read_csv('DataSet/PetData.csv')
@@ -39,16 +42,17 @@ def month_diff(d1, d2):
 # Apply the function to calculate the difference in months
 merged_data['MonthsToClaim'] = merged_data.apply(lambda row: month_diff(row['ClaimDate'], row['EnrollDate_y']), axis=1)
 
+
 # Save the updated DataFrame
 merged_data.to_csv('DataSet/merged_pet_claims_data.csv', index=False)
 
-# Display the first few rows to verify the changes
-print(merged_data.head())
 
 # nan_in_data = merged_data.isna().any()
 
 # print(nan_in_data)
-print("Unique values in 'PetAge':", merged_data['PetAge'].unique())
+# print("Unique values in 'PetAge':", merged_data['PetAge'].unique())
 
 
-print(merged_data['PetAge'])
+# print(merged_data['PetAge'])
+
+
