@@ -49,10 +49,7 @@ else:
 
 # Define your features and target variable
 features = ['PetAge', 'Species', 'Breed']
-target = 'Premium'
-
-# Define your features and target variable
-target = 'Premium'
+target = 'AmountClaimed'
 
 # Preprocessing for numerical and categorical data
 preprocessor = ColumnTransformer(
@@ -84,7 +81,7 @@ print("NaN in X_test:", np.isnan(X_test).any())
 # Neural network model
 model = Sequential()
 # Input layer with batch normalization
-model.add(Dense(64, input_shape=(X_train.shape[1],)))
+model.add(Dense(128, input_shape=(X_train.shape[1],)))
 model.add(BatchNormalization())
 model.add(Activation('relu'))
 
@@ -106,7 +103,7 @@ model.compile(optimizer=adam_optimizer, loss='mean_squared_error')
 
 
 # Train the model
-# model.fit(X_train, y_train, epochs=10, batch_size=32)
+model.fit(X_train, y_train, epochs=10, batch_size=32)
 
 # Make predictions and evaluate the model
 predictions = model.predict(X_test)
@@ -125,48 +122,3 @@ print(f"Mean Squared Error: {mse}")
 print(f"Root Mean Squared Error: {rmse}")
 print(f"Mean Absolute Error: {mae}")
 print(f"R-squared: {r2}")
-
-import matplotlib.pyplot as plt
-import seaborn as sns
-
-# Assuming you have a history object from the model.fit() method
-history = model.fit(X_train, y_train, epochs=5, batch_size=64, validation_split=0.2)
-
-import matplotlib.pyplot as plt
-import seaborn as sns
-
-# Assuming you have a history object from model.fit()
-history = model.fit(X_train, y_train, epochs=5, batch_size=64, validation_split=0.2)
-
-# Plot training & validation loss values
-plt.figure(figsize=(10, 6))
-plt.plot(history.history['loss'], label='Train Loss')
-plt.plot(history.history['val_loss'], label='Validation Loss')
-plt.title('Model Loss')
-plt.ylabel('Loss')
-plt.xlabel('Epoch')
-plt.legend(loc='upper right')
-plt.savefig('Result/model_loss.png')
-plt.show()
-
-# Generate predictions
-y_pred = model.predict(X_test)
-
-# Plot actual vs predicted values
-plt.figure(figsize=(10, 6))
-sns.scatterplot(x=y_test, y=y_pred[:,0])
-plt.title('Actual vs Predicted Premiums')
-plt.xlabel('Actual Premiums')
-plt.ylabel('Predicted Premiums')
-plt.savefig('Result/actual_vs_predicted.png')
-plt.show()
-
-# Plot residuals
-residuals = y_test - y_pred[:,0]
-plt.figure(figsize=(10, 6))
-sns.distplot(residuals)
-plt.title('Distribution of Residuals')
-plt.xlabel('Residuals')
-plt.ylabel('Frequency')
-plt.savefig('Result/residuals_distribution.png')
-plt.show()
